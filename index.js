@@ -52,7 +52,8 @@ var jokeFailed = "Sorry, your old dad's memory ain't what it used to be. Try me 
 
 //create and assign our Alexa App instance to an address on express, in this case https://hey-dad.herokuapp.com/api/hey-dad
 var alexaApp = new alexa.app('hey-dad');
-alexaApp.express(app, "/api/");
+alexaApp.express(app, "/");
+//alexaApp.express(app, "/api/");
 
 //make sure our app is only being launched by the correct application (our Amazon Alexa app)
 // alexaApp.pre = function(request,response,type) {
