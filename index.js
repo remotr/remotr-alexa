@@ -5,7 +5,7 @@ var alexa = require('alexa-app');
 //initialize the app and set the port
 var app = express();
 //verifier to make sure our certs come from Amazon
-verifier = require('alexa-verifier');
+//verifier = require('alexa-verifier');
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static('public'));
@@ -55,19 +55,19 @@ var alexaApp = new alexa.app('hey-dad');
 alexaApp.express(app, "/api/");
 
 //make sure our app is only being launched by the correct application (our Amazon Alexa app)
-alexaApp.pre = function(request,response,type) {
-	if (request.sessionDetails.application.applicationId != "amzn1.echo-sdk-ams.app.440526a5-4703-4886-87eb-d09a6e9eaf13") {
-		// Fail ungracefully 
-		response.fail("Invalid applicationId");
-	}
-};
+// alexaApp.pre = function(request,response,type) {
+// 	if (request.sessionDetails.application.applicationId != "amzn1.echo-sdk-ams.app.440526a5-4703-4886-87eb-d09a6e9eaf13") {
+// 		// Fail ungracefully
+// 		response.fail("Invalid applicationId");
+// 	}
+// };
 
 //our intent that is launched when "Hey Alexa, open Hey Dad" command is made
 //since our app only has the one function (tell a bad joke), we will just do that when it's launched
 alexaApp.launch(function(request,response) {
 	//log our app launch
-	console.log("App launched"); 
-	
+	console.log("App launched");
+
 	//our joke which we share to both the companion app and the Alexa device
 	var joke = getJoke();
 	//if we failed to get a joke, apologize
@@ -79,7 +79,7 @@ alexaApp.launch(function(request,response) {
 	}
 	response.say(joke);
 	response.send();
-	
+
 });
 
 //our TellMeAJoke intent, this handles the majority of our interactions.
@@ -117,10 +117,10 @@ alexaApp.intent('TellMeAJokeAbout',{
 			"Tell me a {topic|TOPIC} joke"]
     },
     function(request, response){
-		
+
 		//our topic variable from the intent
 		var topic = request.slot('TOPIC');
-		
+
 		//our joke which we share to both the companion app and the Alexa device
 		var joke = getJokeAbout(topic);
 		//if we failed to get a joke, apologize
@@ -177,15 +177,15 @@ var getJoke = function(){
 var getJokeAbout = function(topic){
 	//regex off final "s" "ed" or "er"
 	topic = topic.replace(/(s|ed|er)$/gi,"");
-	
+
 	console.log("Our topic is: "+topic);
-	
+
 	var jokes = shuffle(jokeList);
-	
+
 	//so that we can randomize and not always get the first joke about a topic
 	var length = jokes.length;
 	var randomOffset = Math.floor(Math.random() * length);
-	
+
 	for(var i = 0; i < jokes.length; i++){
 			//start somewhere and modulo us back down
 			var which = (i + randomOffset) % length;
