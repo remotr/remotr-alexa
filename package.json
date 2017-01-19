@@ -1,6 +1,6 @@
 {
   "name": "remotr-alexa",
-  "version": "0.0.1",
+  "version": "0.0.2",
 
   "dependencies": {
     "alexa-app": "2.2.x",
